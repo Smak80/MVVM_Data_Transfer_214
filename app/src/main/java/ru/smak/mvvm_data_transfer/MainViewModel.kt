@@ -2,6 +2,10 @@ package ru.smak.mvvm_data_transfer
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
@@ -26,5 +30,27 @@ class MainViewModel : ViewModel() {
 
     val result = mutableStateOf("")
 
-    val operation = mutableStateOf(Operation.PLUS)
+    val _operation = mutableStateOf(Operation.PLUS)
+
+    var operation: Operation
+        get() = _operation.value
+        set(value){
+            _operation.value = value
+            calc.operation = value
+        }
+
+    val _operationPermitted = mutableStateOf(false)
+    var operationPermitted: Boolean
+        get() = _operationPermitted.value
+        set(value){
+            _operationPermitted.value = value
+        }
+
+    init{
+        viewModelScope.launch {
+            calc.canCalculate.onEach {
+                operationPermitted = it
+            }.collect()
+        }
+    }
 }

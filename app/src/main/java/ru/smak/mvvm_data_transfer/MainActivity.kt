@@ -57,23 +57,23 @@ class MainActivity : ComponentActivity() {
                                 verticalArrangement = Arrangement.SpaceBetween,
                                 horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
-                                FilledIconToggleButton(checked = mvm.operation.value == Operation.PLUS, onCheckedChange = {
-                                    mvm.operation.value = Operation.PLUS
+                                FilledIconToggleButton(checked = mvm.operation == Operation.PLUS, onCheckedChange = {
+                                    mvm.operation = Operation.PLUS
                                 }) {
                                     Text("+")
                                 }
-                                FilledIconToggleButton(checked = mvm.operation.value == Operation.MINUS, onCheckedChange = {
-                                    mvm.operation.value = Operation.MINUS
+                                FilledIconToggleButton(checked = mvm.operation == Operation.MINUS, onCheckedChange = {
+                                    mvm.operation = Operation.MINUS
                                 }) {
                                     Text("-")
                                 }
-                                FilledIconToggleButton(checked = mvm.operation.value == Operation.TIMES, onCheckedChange = {
-                                    mvm.operation.value = Operation.TIMES
+                                FilledIconToggleButton(checked = mvm.operation == Operation.TIMES, onCheckedChange = {
+                                    mvm.operation = Operation.TIMES
                                 }) {
                                     Text("*")
                                 }
-                                FilledIconToggleButton(checked = mvm.operation.value == Operation.DIV, onCheckedChange = {
-                                    mvm.operation.value = Operation.DIV
+                                FilledIconToggleButton(checked = mvm.operation == Operation.DIV, onCheckedChange = {
+                                    mvm.operation = Operation.DIV
                                 }) {
                                     Text("/")
                                 }
@@ -81,7 +81,7 @@ class MainActivity : ComponentActivity() {
                         }
                         Button(
                             onClick = { /*TODO*/ },
-                            enabled = false,
+                            enabled = mvm.operationPermitted,
                         ) {
                             Text("=")
                         }
