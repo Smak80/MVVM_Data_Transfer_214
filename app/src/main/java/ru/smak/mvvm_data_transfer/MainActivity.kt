@@ -18,7 +18,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.smak.mvvm_data_transfer.ui.theme.MVVM_Data_TransferTheme
 
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
