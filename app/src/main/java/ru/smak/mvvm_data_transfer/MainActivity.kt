@@ -43,10 +43,10 @@ class MainActivity : ComponentActivity() {
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 OutlinedTextField(value = mvm.arg1, onValueChange = {
-                                    if (it.toIntOrNull() != null) mvm.arg1 = it
+                                    if (it.isEmpty() || it.toIntOrNull() != null) mvm.arg1 = it
                                 })
                                 OutlinedTextField(value = mvm.arg2, onValueChange = {
-                                    if (it.toIntOrNull() != null) mvm.arg2 = it
+                                    if (it.isEmpty() || it.toIntOrNull() != null) mvm.arg2 = it
                                 })
                             }
                             Column(
@@ -80,12 +80,12 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                         Button(
-                            onClick = { /*TODO*/ },
+                            onClick = { mvm.updateResult() },
                             enabled = mvm.operationPermitted,
                         ) {
                             Text("=")
                         }
-                        Text(mvm.result.value)
+                        Text(mvm.result)
                     }
                 }
             }
