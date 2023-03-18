@@ -28,7 +28,13 @@ class Calculator {
             calcScope.launch { canCalculate.emit(check()) }
         }
 
-    var result: String = ""
+    val result: String
+        get() = if (check()) when(operation){
+            Operation.PLUS  -> (arg1.toIntOrNull() ?: 0) + (arg2.toIntOrNull() ?: 0)
+            Operation.MINUS -> (arg1.toIntOrNull() ?: 0) - (arg2.toIntOrNull() ?: 0)
+            Operation.TIMES -> (arg1.toIntOrNull() ?: 0) * (arg2.toIntOrNull() ?: 0)
+            Operation.DIV   -> (arg1.toIntOrNull() ?: 0) / (arg2.toIntOrNull() ?: 0)
+        }.toString() else ""
 
     var canCalculate = MutableSharedFlow<Boolean>(replay = 1)
 

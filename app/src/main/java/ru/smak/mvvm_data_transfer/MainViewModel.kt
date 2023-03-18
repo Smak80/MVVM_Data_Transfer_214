@@ -19,6 +19,7 @@ class MainViewModel : ViewModel() {
         set(value) {
             _arg1.value = value
             calc.arg1 = value
+            result = ""
         }
 
     var arg2: String
@@ -26,20 +27,24 @@ class MainViewModel : ViewModel() {
         set(value) {
             _arg2.value = value
             calc.arg2 = value
+            result = ""
         }
 
-    val result = mutableStateOf("")
+    private val _result = mutableStateOf("")
+    var result: String
+        get() = _result.value
+        private set(value) {_result.value = value}
 
-    val _operation = mutableStateOf(Operation.PLUS)
-
+    private val _operation = mutableStateOf(Operation.PLUS)
     var operation: Operation
         get() = _operation.value
         set(value){
             _operation.value = value
             calc.operation = value
+            result = ""
         }
 
-    val _operationPermitted = mutableStateOf(false)
+    private val _operationPermitted = mutableStateOf(false)
     var operationPermitted: Boolean
         get() = _operationPermitted.value
         set(value){
@@ -47,10 +52,24 @@ class MainViewModel : ViewModel() {
         }
 
     init{
+        /**
+         * Асинхронное получение данных из модели через подписку на общий поток.
+         * Можно использовать, когда заранее неизвестно, в какой момент в модели
+         * появится необходимая для пользователя информация
+         */
         viewModelScope.launch {
             calc.canCalculate.onEach {
                 operationPermitted = it
             }.collect()
         }
+    }
+
+    fun updateResult(){
+        /**
+         * Синхронное получение данных из модели.
+         * Более простой способ. Применяется, когда известно,
+         * в какой момент понадобятся данные
+         */
+        result = calc.result
     }
 }
