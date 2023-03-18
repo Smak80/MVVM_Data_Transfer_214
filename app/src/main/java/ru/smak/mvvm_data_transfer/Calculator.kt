@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 
 class Calculator {
 
-    val calcScope = CoroutineScope(Dispatchers.IO + Job())
+    private val calcScope = CoroutineScope(Dispatchers.IO + Job())
 
     var arg1: String = ""
         set(value) {
